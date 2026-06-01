@@ -1,0 +1,116 @@
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.modal-scroll:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.list-scroll-bar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+.list-scroll-bar::-webkit-scrollbar {
+  width: 6px;
+}
+.list-scroll-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.list-scroll-bar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+.list-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes page-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-fadein {
+  animation: page-fadein 0.45s ease forwards;
+}
+
+@keyframes tiermaker-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.tiermaker-fadein {
+  animation: tiermaker-fadein 0.3s ease forwards;
+}
+
+
+@keyframes stats-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes list-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes bar-grow-r {
+  from {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

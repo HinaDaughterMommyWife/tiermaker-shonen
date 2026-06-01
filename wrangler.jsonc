@@ -1,0 +1,17 @@
+{
+  "compatibility_date": "2026-05-27",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "name": "tiermaker-shonen",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "vars": {
+    "API_BASE_URL": "https://data.shonensemanal.site",
+    "PUBLIC_FILE_BASE_URL": "https://data.shonensemanal.site/files",
+  },
+}

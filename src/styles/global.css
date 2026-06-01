@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@import "./utils.css";
+
+@theme {
+  --color-tier-s: #ff7f7f;
+  --color-tier-a: #ffbf7f;
+  --color-tier-b: #ffdf7f;
+  --color-tier-c: #ffff7f;
+  --color-tier-d: #7fff7f;
+  --color-tier-f: #7fbfff;
+  --color-bg-base: #0d0d12;
+  --color-bg-card: #0a0a0f;
+  --color-bg-surface: #141420;
+  --color-accent: #e94560;
+  --color-vs-bg: #09090e;
+  --color-team-red: #ef4444;
+  --color-team-blue: #3b82f6;
+}
+
+#dnd-action-dragged-el {
+  transition: none !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-is-dnd-shadow-item-internal] {
+  visibility: visible !important;
+  opacity: 0.25 !important;
+  border-radius: 0.25rem;
+  transition: none !important;
+}
+[data-is-dnd-shadow-item-internal] > * {
+  visibility: visible;
+}
+
+body {
+  transition: background-color 1.6s ease;
+}
+body.winner-red {
+  background-color: #1a0808;
+}
+body.winner-blue {
+  background-color: #06061a;
+}
+body.winner-tie {
+  background-color: #0d0d0d;
+}

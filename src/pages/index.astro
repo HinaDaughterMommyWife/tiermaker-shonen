@@ -1,0 +1,93 @@
+---
+import { fetchMangasByTeam, getFileUrl } from "../lib/api/client";
+import type { MangaItem } from "../stores/tierStore";
+import TierVsOrchestrator from "../components/TierVsOrchestrator.svelte";
+import "../styles/global.css";
+
+// Fetch teams red + blue in parallel
+const [redMangas, blueMangas] = await Promise.all([
+  fetchMangasByTeam("red"),
+  fetchMangasByTeam("blue"),
+]);
+
+// Merge and map to MangaItem — dedupe by manga id
+const seen = new Set<number>();
+const items: MangaItem[] = [];
+
+for (const manga of [...redMangas, ...blueMangas]) {
+  if (seen.has(manga.id)) continue;
+  seen.add(manga.id);
+  items.push({
+    id: String(manga.id),
+    mangaId: manga.id,
+    name: manga.name,
+    slug: manga.slug,
+    coverUrl: getFileUrl(manga.cover_hash),
+    teamId: manga.team_id,
+    weeklyIsActive: manga.weekly_is_active,
+  });
+}
+
+// Active weekly first, then inactive; alphabetical within each group
+items.sort((a, b) => {
+  if (a.weeklyIsActive !== b.weeklyIsActive) {
+    return a.weeklyIsActive ? -1 : 1;
+  }
+  return a.name.localeCompare(b.name);
+});
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shonen Semanal — Tier List</title>
+    <meta name="description" content="Crea tu tier list con los mangas de Shonen Semanal" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/glow-red.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" href="/glow-blue.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" href="/vignette.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" href="/col-flash.svg" as="image" type="image/svg+xml" />
+  </head>
+  <body class="bg-bg-base min-h-screen text-white">
+    <main>
+      <div class="page-fadein">
+        <div id="tiermaker-skeleton" class="h-screen w-full" aria-hidden="true"></div>
+        <TierVsOrchestrator client:only="svelte" initialItems={items} />
+      </div>
+    </main>
+
+    <footer
+      class="bg-bg-base flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-white/10 px-6 py-4 text-center text-xs text-white/20"
+    >
+      Desarrollado por <a
+        href="https://github.com/HinaDaughterMommyWife"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-purple-500 hover:underline">Hina Lover 💕</a>
+
+      <span class="text-white/10">·</span>
+
+      <a
+        href="https://github.com/HinaDaughterMommyWife/tiermaker-shonen"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1 text-purple-500 underline hover:text-purple-400"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="h-3.5 w-3.5"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.085 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+          ></path>
+        </svg>
+        Source code
+      </a>
+    </footer>
+  </body>
+</html>
